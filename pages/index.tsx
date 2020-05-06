@@ -1,25 +1,27 @@
-import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const Home = () => (
-  <div className="duration-300 h-screen">
-    <ul className="flex">
-      <li className="mr-2 p-2 border-2 border-none rounded-lg bg-gray-500">
-        <Link href="/forest">
-          <a>Forest</a>
-        </Link>
-      </li>
-      <li className="mr-2 p-2 border-2 border-none rounded-lg bg-gray-500">
-        <Link href="/sea">
-          <a>Sea</a>
-        </Link>
-      </li>
-      <li className="mr-2 p-2 border-2 border-none rounded-lg bg-gray-500">
-        <Link href="/volcano">
-          <a>Volcano</a>
-        </Link>
-      </li>
-    </ul>
-  </div>
-);
+const Saba = require("../svgs/saba.svg");
+
+const backgrounds = ["blue", "indigo", "teal", "purple"];
+
+const Home = () => {
+  const [currentBg, setCurrentBg] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBg((currentBg + 1) % backgrounds.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [currentBg]);
+
+  return (
+    <div
+      className={`bg-${backgrounds[currentBg]}-200 transition-colors duration-500 ease-linear h-screen`}
+    >
+      <div className="-translate-x-16 absolute bottom-0 transform">
+        <Saba />
+      </div>
+    </div>
+  );
+};
 
 export default Home;
